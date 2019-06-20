@@ -29,55 +29,55 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       userObj: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
-    };
+    }
   },
   methods: {
-    login() {
+    login () {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
           this.$http({
-            method: "post",
-            url: "http://localhost:8888/api/private/v1/login",
+            method: 'post',
+            url: 'http://localhost:8888/api/private/v1/login',
             data: this.userObj
           })
             .then(res => {
               // console.log(res);
-              let { data, meta } = res.data;
+              let { data, meta } = res.data
               if (meta.status === 200) {
                 // console.log(res.data)
-                this.$router.push("/");
-                window.localStorage.setItem("token", data.token);
+                this.$router.push('/')
+                window.localStorage.setItem('token', data.token)
                 this.$message({
                   message: meta.msg,
-                  type: "success"
-                });
+                  type: 'success'
+                })
               } else {
-                this.$message.error(meta.msg);
+                this.$message.error(meta.msg)
               }
             })
             .catch(err => {
-              console.log(err);
-            });
+              console.log(err)
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style>
