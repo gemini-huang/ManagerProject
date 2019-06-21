@@ -357,19 +357,19 @@ export default {
           rid: this.roleObj.rid
         },
         headers: {
-          Authorization:window.localStorage.getItem('token')
+          Authorization: window.localStorage.getItem('token')
         }
       }).then(res => {
         let {meta} = res.data
-        if(meta.status === 200) {
+        if (meta.status === 200) {
           this.$message({
             message: meta.msg,
             type: 'success'
           })
-        }else{
+        } else {
           this.$message.error(meta.msg)
         }
-      }).catch(err =>{
+      }).catch(err => {
         console.log(err)
       })
       this.roleFormVisible = false
@@ -407,7 +407,7 @@ export default {
         }
       })
     },
-    putUser() {
+    putUser () {
       this.$http({
         method: 'put',
         url: 'http://localhost:8888/api/private/v1/users/' + this.editUser.id,
@@ -417,7 +417,7 @@ export default {
         }
       }).then(res => {
         let {meta} = res.data
-        if(meta.status === 200) {
+        if (meta.status === 200) {
           this.$message({
             message: meta.msg,
             type: 'success'
