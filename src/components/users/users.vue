@@ -2,11 +2,7 @@
   <div>
     <el-card>
       <!-- 面包屑区域 -->
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-        <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-      </el-breadcrumb>
+      <Breadcrumb level2="用户管理" level3="用户列表"></Breadcrumb>
       <el-row class="myelrow">
         <el-col :span="6">
           <el-input
@@ -170,6 +166,7 @@
 </template>
 
 <script>
+import Breadcrumb from '@/components/common/breadcrumb'
 export default {
   data () {
     return {
@@ -217,6 +214,9 @@ export default {
         mobile: ''
       }
     }
+  },
+  components: {
+    Breadcrumb
   },
   methods: {
     getTableList () {
