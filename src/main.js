@@ -6,11 +6,12 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/index.css'
-import axios from 'axios'
+import myaxios from '@/assets/js/myaxios'
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-Vue.prototype.$http = axios
+// 使用自己封装的插件
+Vue.use(myaxios)
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-card>
+      <!-- 面包屑区域 -->
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>用户管理</el-breadcrumb-item>
@@ -27,6 +28,7 @@
           >
         </el-col>
       </el-row>
+      <!-- 表格区域 -->
       <el-table :data="userList" style="width: 100%">
         <el-table-column type="index" width="50"> </el-table-column>
         <el-table-column prop="username" label="姓名" width="180">
@@ -72,6 +74,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页区域 -->
       <el-pagination
         @size-change="sizeChange"
         @current-change="currentChange"
@@ -82,6 +85,7 @@
         :total="total"
       >
       </el-pagination>
+      <!-- 弹框 -->
       <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
         <el-form :model="userObj" :rules="rules" ref="ruleForm">
           <el-form-item
@@ -167,7 +171,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       userList: [],
       query: '',
@@ -215,15 +219,12 @@ export default {
     }
   },
   methods: {
-    getTableList () {
+    getTableList() {
       this.$http({
         method: 'get',
-        url: `http://localhost:8888/api/private/v1/users?query=${
+        url: `users?query=${
           this.query
         }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`,
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
       })
         .then(res => {
           let { data, meta } = res.data
@@ -236,23 +237,23 @@ export default {
           console.log(err)
         })
     },
-    currentChange (currentPage) {
+    currentChange(currentPage) {
       this.pagenum = currentPage
       this.getTableList()
     },
-    sizeChange (size) {
+    sizeChange(size) {
       this.pagesize = size
       this.getTableList()
     },
-    searchUser () {
+    searchUser() {
       this.getTableList()
     },
-    addUser () {
+    addUser() {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
           this.$http({
             method: 'post',
-            url: 'http://localhost:8888/api/private/v1/users',
+            url: 'users',
             data: this.userObj,
             headers: {
               Authorization: window.localStorage.getItem('token')
@@ -285,7 +286,7 @@ export default {
         }
       })
     },
-    del (id) {
+    del(id) {
       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -294,7 +295,7 @@ export default {
         .then(() => {
           this.$http({
             method: 'delete',
-            url: 'http://localhost:8888/api/private/v1/users/' + id,
+            url: 'users/' + id,
             headers: {
               Authorization: window.localStorage.getItem('token')
             }
@@ -319,15 +320,12 @@ export default {
           })
         })
     },
-    editOpen (id) {
+    editOpen(id) {
       this.roleFormVisible = true
       this.showRole()
       this.$http({
         method: 'get',
-        url: 'http://localhost:8888/api/private/v1/users/' + id,
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: 'users/' + id,
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
@@ -335,13 +333,10 @@ export default {
         }
       })
     },
-    showRole () {
+    showRole() {
       this.$http({
         method: 'get',
-        url: 'http://localhost:8888/api/private/v1/roles',
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: 'roles',
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
@@ -349,38 +344,36 @@ export default {
         }
       })
     },
-    editRole () {
+    editRole() {
       this.$http({
         method: 'put',
-        url: `http://localhost:8888/api/private/v1/users/${this.roleObj.id}/role`,
+        url: `users/${
+          this.roleObj.id
+        }/role`,
         data: {
           rid: this.roleObj.rid
         },
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
-      }).then(res => {
-        let {meta} = res.data
-        if (meta.status === 200) {
-          this.$message({
-            message: meta.msg,
-            type: 'success'
-          })
-        } else {
-          this.$message.error(meta.msg)
-        }
-      }).catch(err => {
-        console.log(err)
       })
+        .then(res => {
+          let { meta } = res.data
+          if (meta.status === 200) {
+            this.$message({
+              message: meta.msg,
+              type: 'success'
+            })
+          } else {
+            this.$message.error(meta.msg)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       this.roleFormVisible = false
     },
-    changState (id, state) {
+    changState(id, state) {
       this.$http({
         method: 'put',
-        url: `http://localhost:8888/api/private/v1/users/${id}/state/${state}`,
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: `users/${id}/state/${state}`,
       }).then(res => {
         console.log(res)
         let { meta } = res.data
@@ -392,14 +385,11 @@ export default {
         }
       })
     },
-    editUserOpen (id) {
+    editUserOpen(id) {
       this.addUserFormVisible = true
       this.$http({
         method: 'get',
-        url: 'http://localhost:8888/api/private/v1/users/' + id,
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
+        url: 'users/' + id,
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
@@ -407,16 +397,13 @@ export default {
         }
       })
     },
-    putUser () {
+    putUser() {
       this.$http({
         method: 'put',
-        url: 'http://localhost:8888/api/private/v1/users/' + this.editUser.id,
+        url: 'users/' + this.editUser.id,
         data: this.editUser,
-        headers: {
-          Authorization: window.localStorage.getItem('token')
-        }
       }).then(res => {
-        let {meta} = res.data
+        let { meta } = res.data
         if (meta.status === 200) {
           this.$message({
             message: meta.msg,
@@ -428,7 +415,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.getTableList()
   }
 }
