@@ -2,7 +2,7 @@ import axios from 'axios'
 
 var myaxios = {}
 myaxios.install = function (Vue) {
-  axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/';
+  axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
   // 这个只会执行一次
   // axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('token');
   // 添加请求拦截器
@@ -12,8 +12,8 @@ myaxios.install = function (Vue) {
     if (!config.url.includes('login')) {
       config.headers.Authorization = window.localStorage.getItem('token')
     }
-    return config;
-  });
+    return config
+  })
 
   Vue.prototype.$http = axios
 }

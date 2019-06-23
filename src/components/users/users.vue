@@ -171,7 +171,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       userList: [],
       query: '',
@@ -219,12 +219,12 @@ export default {
     }
   },
   methods: {
-    getTableList() {
+    getTableList () {
       this.$http({
         method: 'get',
         url: `users?query=${
           this.query
-        }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`,
+        }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
       })
         .then(res => {
           let { data, meta } = res.data
@@ -237,18 +237,18 @@ export default {
           console.log(err)
         })
     },
-    currentChange(currentPage) {
+    currentChange (currentPage) {
       this.pagenum = currentPage
       this.getTableList()
     },
-    sizeChange(size) {
+    sizeChange (size) {
       this.pagesize = size
       this.getTableList()
     },
-    searchUser() {
+    searchUser () {
       this.getTableList()
     },
-    addUser() {
+    addUser () {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
           this.$http({
@@ -286,7 +286,7 @@ export default {
         }
       })
     },
-    del(id) {
+    del (id) {
       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -320,12 +320,12 @@ export default {
           })
         })
     },
-    editOpen(id) {
+    editOpen (id) {
       this.roleFormVisible = true
       this.showRole()
       this.$http({
         method: 'get',
-        url: 'users/' + id,
+        url: 'users/' + id
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
@@ -333,10 +333,10 @@ export default {
         }
       })
     },
-    showRole() {
+    showRole () {
       this.$http({
         method: 'get',
-        url: 'roles',
+        url: 'roles'
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
@@ -344,7 +344,7 @@ export default {
         }
       })
     },
-    editRole() {
+    editRole () {
       this.$http({
         method: 'put',
         url: `users/${
@@ -352,7 +352,7 @@ export default {
         }/role`,
         data: {
           rid: this.roleObj.rid
-        },
+        }
       })
         .then(res => {
           let { meta } = res.data
@@ -370,10 +370,10 @@ export default {
         })
       this.roleFormVisible = false
     },
-    changState(id, state) {
+    changState (id, state) {
       this.$http({
         method: 'put',
-        url: `users/${id}/state/${state}`,
+        url: `users/${id}/state/${state}`
       }).then(res => {
         console.log(res)
         let { meta } = res.data
@@ -385,11 +385,11 @@ export default {
         }
       })
     },
-    editUserOpen(id) {
+    editUserOpen (id) {
       this.addUserFormVisible = true
       this.$http({
         method: 'get',
-        url: 'users/' + id,
+        url: 'users/' + id
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
@@ -397,11 +397,11 @@ export default {
         }
       })
     },
-    putUser() {
+    putUser () {
       this.$http({
         method: 'put',
         url: 'users/' + this.editUser.id,
-        data: this.editUser,
+        data: this.editUser
       }).then(res => {
         let { meta } = res.data
         if (meta.status === 200) {
@@ -415,7 +415,7 @@ export default {
       })
     }
   },
-  mounted() {
+  mounted () {
     this.getTableList()
   }
 }
