@@ -100,7 +100,7 @@
 <script>
 import Breadcrumbs from '../../components/common/breadcrumb'
 export default {
-  data() {
+  data () {
     return {
       options: [],
       activeName: 'many',
@@ -113,7 +113,7 @@ export default {
     Breadcrumbs
   },
   methods: {
-    getCategoryList() {
+    getCategoryList () {
       this.$http({
         method: 'get',
         url: 'categories?type=3'
@@ -124,7 +124,7 @@ export default {
         }
       })
     },
-    getTableList() {
+    getTableList () {
       this.$http({
         method: 'get',
         url: `categories/${this.selectedOptions[2]}/attributes?sel=${
@@ -154,14 +154,14 @@ export default {
         }
       })
     },
-    handleChange() {
+    handleChange () {
       this.getTableList()
     },
-    handleClick() {
+    handleClick () {
       this.getTableList()
     }
   },
-  mounted() {
+  mounted () {
     this.getCategoryList()
   }
 }

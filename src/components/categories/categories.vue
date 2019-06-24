@@ -56,11 +56,11 @@
 <script>
 import Breadcrumbs from '@/components/common/breadcrumb'
 export default {
-  data() {
+  data () {
     return {
       categoryList: [],
       total: 0,
-      pagenum:1,
+      pagenum: 1,
       pagesize: 5,
       pagesizes: [5, 10, 15]
     }
@@ -69,7 +69,7 @@ export default {
     Breadcrumbs
   },
   methods: {
-    getTableList() {
+    getTableList () {
       this.$http({
         method: 'get',
         url: `categories?type=3&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
@@ -82,16 +82,16 @@ export default {
         }
       })
     },
-    sizeChange(size) {
+    sizeChange (size) {
       this.pagesize = size
       this.getTableList()
     },
-    currentChange(currentPage) {
+    currentChange (currentPage) {
       this.pagenum = currentPage
       this.getTableList()
     }
   },
-  mounted() {
+  mounted () {
     this.getTableList()
   }
 }

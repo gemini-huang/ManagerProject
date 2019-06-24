@@ -7,14 +7,14 @@
       </el-table-column>
       <el-table-column prop="order_price" label="订单价格" width="180">
       </el-table-column>
-      <el-table-column label="是否付款"> 
+      <el-table-column label="是否付款">
         <template slot-scope="scope">
           <el-button type="danger" plain size="mini" v-if="scope.row.order_pay === '0'">未付款</el-button>
           <el-button type="success" plain size="mini" v-else>已付款</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="is_send" label="是否发货"> </el-table-column>
-      <el-table-column label="下单时间"> 
+      <el-table-column label="下单时间">
         <template slot-scope="scope">
           {{ scope.row.create_time | dateFormat }}
         </template>
@@ -47,34 +47,34 @@
 <script>
 import Breadcrumbs from '@/components/common/breadcrumb'
 export default {
-  data() {
+  data () {
     return {
       tableData: [],
       query: '',
       total: 0,
       pagenum: 1,
       pagesize: 5,
-      pagesizes: [10,15,20]
+      pagesizes: [10, 15, 20]
     }
   },
   methods: {
-    getTableList() {
+    getTableList () {
       this.$http({
         method: 'get',
         url: `orders?query=${this.query}&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
       }).then(res => {
-        let {data ,meta} = res.data
-        if(res.status === 200) {
+        let {data, meta} = res.data
+        if (meta.status === 200) {
           this.tableData = data.goods
           this.total = data.total
         }
       })
     },
-    sizeChange(size) {
+    sizeChange (size) {
       this.pagesize = size
       this.getTableList()
     },
-    currentChange(currentPage) {
+    currentChange (currentPage) {
       this.pagenum = currentPage
       this.getTableList()
     }
@@ -82,7 +82,7 @@ export default {
   components: {
     Breadcrumbs
   },
-  mounted() {
+  mounted () {
     this.getTableList()
   }
 }

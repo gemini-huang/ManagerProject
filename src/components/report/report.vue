@@ -8,7 +8,7 @@
 import echarts from 'echarts'
 import _ from 'lodash'
 export default {
-  data() {
+  data () {
     return {
       option: {
         title: {
@@ -43,21 +43,21 @@ export default {
     }
   },
   methods: {
-    loadCharts() {
+    loadCharts () {
       this.$http({
         method: 'get',
         url: 'reports/type/1'
-      }).then(res =>{
-        let {data ,meta} = res.data
-        if(meta.status === 200) {
+      }).then(res => {
+        let {data, meta} = res.data
+        if (meta.status === 200) {
           this.option = _.merge(this.option, data)
-          const myChart = echarts.init(this.$refs.ecartsArea);
-          myChart.setOption(this.option);
+          const myChart = echarts.init(this.$refs.ecartsArea)
+          myChart.setOption(this.option)
         }
       })
     }
   },
-  mounted() {
+  mounted () {
     this.loadCharts()
   }
 }
