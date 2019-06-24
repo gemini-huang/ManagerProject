@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style>
-el-breadcrumb {
+.el-breadcrumb {
   margin-bottom: 20px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <Breadcrumb level2="权限管理" level3="角色管理"></Breadcrumb>
-    <el-button type="success" class="myButton">添加角色</el-button>
+    <el-button type="success">添加角色</el-button>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="scope">
@@ -153,20 +153,21 @@ export default {
     },
     showRightsDialog (role) {
       // 获取当前角色具有的权限id
-      function getLevel3Ids (rightsList) {
-        let arr = []
-        let fn = function (list) {
-          list.forEach(item => {
-            if (!item.children) {
-              arr.push(item.id)
-            } else {
-              fn(item.children)
-            }
-          })
-        }
-        fn(rightsList)
-        return arr
-      }
+      // function getLevel3Ids (rightsList) {
+      //   let arr = []
+      //   let fn = function (list) {
+      //     list.forEach(item => {
+      //       if (!item.children) {
+      //         arr.push(item.id)
+      //       } else {
+      //         fn(item.children)
+      //       }
+      //     })
+      //   }
+      //   fn(rightsList)
+      //   return arr
+      // }
+      this.checkedKeys = []
       this.$http({
         method: 'get',
         url: 'rights/tree'
@@ -174,7 +175,15 @@ export default {
         let { data, meta } = res.data
         if (meta.status === 200) {
           this.rightsData = data
-          this.checkedKeys = getLevel3Ids(role.children)
+          // this.checkedKeys = getLevel3Ids(role.children)
+          // 第二种写法
+          role.children.forEach(item1 => {
+            item1.children.forEach(item2 => {
+              item2.children.forEach(item3 => {
+                this.checkedKeys.push(item3.id)
+              })
+            })
+          })
           // 记住当前的角色
           this.currentRole = role
         }
@@ -226,9 +235,6 @@ export default {
 </script>
 
 <style>
-.myButton {
-  margin-top: 20px;
-}
 .level1-row {
   margin-bottom: 10px;
 }

@@ -3,8 +3,8 @@
     <Breadcrumb level2="权限管理" level3="权限列表"></Breadcrumb>
     <el-table :data="tableData" border style="width: 100%" class="mytable">
       <el-table-column type="index" width="40"> </el-table-column>
-      <el-table-column prop="authName" label="权限名称" width="180"> </el-table-column>
-      <el-table-column prop="path" label="路径" width="180"> </el-table-column>
+      <el-table-column prop="authName" label="权限名称" width="200"> </el-table-column>
+      <el-table-column prop="path" label="路径" width="200"> </el-table-column>
       <el-table-column label="层级">
         <template slot-scope="scope">
           <span v-if="scope.row.level === '0'">一级</span>

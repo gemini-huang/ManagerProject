@@ -23,11 +23,11 @@ export default {
     SideBar
   },
   mounted () {
-    let token = window.localStorage.getItem('token')
-    if (!token) {
-      this.$router.push('/login')
-      this.$message.error('请先登录！')
-    }
+    // let token = window.localStorage.getItem('token')
+    // if (!token) {
+    //   this.$router.push('/login')
+    //   this.$message.error('请先登录！')
+    // }
   }
 }
 </script>

@@ -7,11 +7,16 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/index.css'
 import myaxios from '@/assets/js/myaxios'
+import moment from 'moment'
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 // 使用自己封装的插件
 Vue.use(myaxios)
+
+Vue.filter('dateFormat', function (value) {
+  return moment(value).format('YYYY-MM-DD HH:mm:ss')
+})
 
 /* eslint-disable no-new */
 new Vue({
