@@ -9,6 +9,7 @@ import Goods from '@/components/goods/goods'
 import GoodsAdd from '@/components/goodadd/goodadd'
 import Categories from '@/components/categories/categories'
 import Report from '@/components/report/report'
+import Params from '@/components/params/params'
 Vue.use(Router)
 
 let router = new Router({
@@ -57,6 +58,10 @@ let router = new Router({
         {
           path: '/reports',
           component: Report
+        },
+        {
+          path: '/params',
+          component: Params
         }
       ]
     }
