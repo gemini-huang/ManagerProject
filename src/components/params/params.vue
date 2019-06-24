@@ -13,6 +13,7 @@
         <div class="grid-content bg-purple-dark">
           <span>请选择商品分类：</span>
           <el-cascader
+            clearable
             placeholder="请选择商品分类"
             :options="options"
             v-model="selectedOptions"
