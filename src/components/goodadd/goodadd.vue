@@ -34,16 +34,16 @@
       >
         <el-tab-pane label="基本信息">
           <el-form-item label="商品名称" prop="goods_name">
-            <el-input></el-input>
+            <el-input v-model="addForm.goods_name"></el-input>
           </el-form-item>
           <el-form-item label="商品价格" prop="goods_price">
-            <el-input></el-input>
+            <el-input v-model="addForm.goods_price"></el-input>
           </el-form-item>
           <el-form-item label="商品重量" prop="goods_weight">
-            <el-input></el-input>
+            <el-input v-model="addForm.goods_weight"></el-input>
           </el-form-item>
           <el-form-item label="商品数量" prop="goods_number">
-            <el-input></el-input>
+            <el-input v-model="addForm.goods_number"></el-input>
           </el-form-item>
           <el-form-item label="商品分类" prop="goods_cat">
             <el-cascader
@@ -100,8 +100,13 @@
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="商品内容">
-          <el-button class="myBtn" type="primary">添加商品</el-button>
-          <quillEditor v-model="addForm.goods_introduce" class="editor"></quillEditor>
+          <el-button class="myBtn" type="primary" @click="addGoods"
+            >添加商品</el-button
+          >
+          <quillEditor
+            v-model="addForm.goods_introduce"
+            class="editor"
+          ></quillEditor>
         </el-tab-pane>
       </el-tabs>
     </el-form>
@@ -115,7 +120,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 export default {
-  data () {
+  data() {
     return {
       activeTabName: '0',
       options: [],
@@ -158,7 +163,7 @@ export default {
     quillEditor
   },
   methods: {
-    handleClick () {
+    handleClick() {
       // console.log(tab, event)
       // console.log(this.activeTabName)
       if (this.activeTabName === '1' || this.activeTabName === '2') {
@@ -189,7 +194,7 @@ export default {
         })
       }
     },
-    loadCascader () {
+    loadCascader() {
       this.$http({
         method: 'get',
         url: 'categories?type=3'
@@ -200,7 +205,7 @@ export default {
         }
       })
     },
-    uploadSuccess (response) {
+    uploadSuccess(response) {
       // console.log(response.meta.status)
       if (response.meta.status === 200) {
         this.$message({
@@ -213,15 +218,54 @@ export default {
         this.$message.error(response.meta.msg)
       }
     },
-    handleRemove (file) {
+    handleRemove(file) {
       console.log(file)
       let index = this.addForm.pics.findIndex(
         item => file.response.data.tmp_path === item.pic
       )
       this.addForm.pics.splice(index, 1)
+    },
+    // 添加商品
+    addGoods() {
+      this.$refs.addFormRef.validate(valid => {
+        if (!valid) {
+          this.$message.error('请填写必要的商品信息！')
+        }
+      })
+      const o = { ...this.addForm }
+      // 以','分割的分类列表
+      o.goods_cat = o.goods_cat.join(',')
+      // 商品的参数（数组）
+      let attrs1 = this.dynamicTableData.map(item => ({
+        attr_id: item.attr_id,
+        attr_value: item.attr_vals
+      }))
+      let attrs2 = this.staticTableData.map(item => ({
+        attr_id: item.attr_id,
+        attr_value: item.attr_vals
+      }))
+      o.attrs = [...attrs1, ...attrs2]
+      // console.log(o)
+      this.$http({
+        method: 'post',
+        url: `goods`,
+        data: o
+      }).then(res => {
+        let { meta } = res.data
+        console.log(meta)
+        if (meta.status === 201) {
+          this.$message({
+            message: meta.msg,
+            type: 'success'
+          })
+          this.$router.push({name: 'goods'})
+        } else {
+          this.$message.error(meta.msg)
+        }
+      })
     }
   },
-  mounted () {
+  mounted() {
     this.loadCascader()
   }
 }

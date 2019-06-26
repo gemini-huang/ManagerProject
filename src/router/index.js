@@ -48,6 +48,7 @@ let router = new Router({
         },
         {
           path: '/goods',
+          name: 'goods',
           component: Goods
         },
         {
