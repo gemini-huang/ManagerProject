@@ -2,7 +2,7 @@
   <el-card>
     <Breadcrumbs level2="商品管理" level3="商品分类"></Breadcrumbs>
     <el-table
-      :data="categoryList"
+      :data="pageList"
       style="width: 100%"
       row-key="cat_id"
       border
@@ -64,7 +64,9 @@ export default {
       pagenum: 1,
       pagesize: 5,
       pagesizes: [5, 10, 15],
-      loading: true
+      loading: true,
+      // 手动分页
+      pageList: []
     }
   },
   components: {
@@ -74,14 +76,19 @@ export default {
     getTableList () {
       this.$http({
         method: 'get',
-        url: `categories?type=3&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
+        // url: `categories?type=3&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
+        url: 'categories?type=3'
       }).then(res => {
         // console.log(res)
         let { data, meta } = res.data
         if (meta.status === 200) {
           this.loading = false
-          this.categoryList = data.result
-          this.total = data.total
+          this.categoryList = data
+          this.total = data.length
+          // 手动设置分页
+          let begin = this.pagesize * (this.pagenum - 1)
+          let end = this.pagesize * this.pagenum
+          this.pageList = this.categoryList.slice(begin, end + 1)
         }
       })
     },
