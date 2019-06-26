@@ -42,7 +42,8 @@
           <el-button type="danger"
             size="mini"
             icon="el-icon-delete"
-            plain></el-button>
+            plain
+            @click="delGoods(scope.row.goods_id)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -103,6 +104,25 @@ export default {
     },
     goodsAdd () {
       this.$router.push('/goods/add')
+    },
+    // 删除商品
+    delGoods(id) {
+      id = parseInt(id)
+      this.$http({
+        method:'delete',
+        url: `goods/${id}`
+      }).then(res =>{
+        let {meta} = res.data
+        if(meta.status === 200) {
+          this.$message({
+            message: meta.msg,
+            type: 'success'
+          })
+          this.getTableList()
+        }else {
+          this.$message.error(meta.msg)
+        }
+      })
     }
   },
   mounted () {
