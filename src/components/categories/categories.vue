@@ -25,7 +25,7 @@
         </template>
       </el-table-column>
       <el-table-column label="操作">
-        <template>
+        <template slot-scope="scope">
           <el-button
             type="primary"
             size="mini"
@@ -37,6 +37,7 @@
             size="mini"
             icon="el-icon-delete"
             plain
+            @click="deleteCategory(scope.row.cat_id)"
           ></el-button>
         </template>
       </el-table-column>
@@ -167,6 +168,24 @@ export default {
             type: 'success'
           })
           this.dialogFormVisible = false
+          this.getTableList()
+        }else {
+          this.$message.error(meta.msg)
+        }
+      })
+    },
+    // 删除分类
+    deleteCategory(id) {
+      this.$http({
+        method: 'delete',
+        url: `categories/${id}`
+      }).then(res =>{
+        let {meta} = res.data
+        if(meta.status === 200) {
+          this.$message({
+            message: meta.msg,
+            type: 'success'
+          })
           this.getTableList()
         }else {
           this.$message.error(meta.msg)
