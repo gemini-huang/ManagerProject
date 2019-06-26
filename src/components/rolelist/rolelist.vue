@@ -2,7 +2,7 @@
   <el-card>
     <Breadcrumb level2="权限管理" level3="角色管理"></Breadcrumb>
     <el-button type="success">添加角色</el-button>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" v-loading="loading">
       <el-table-column type="expand">
         <template slot-scope="scope">
           <!-- 一级权限 -->
@@ -118,7 +118,8 @@ export default {
         label: 'authName'
       },
       checkedKeys: [],
-      currentRole: {}
+      currentRole: {},
+      loading: true
     }
   },
   components: {
@@ -132,6 +133,7 @@ export default {
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
+          this.loading = false
           this.tableData = data
         }
       })

@@ -25,7 +25,7 @@
         </el-col>
       </el-row>
       <!-- 表格区域 -->
-      <el-table :data="userList" style="width: 100%">
+      <el-table :data="userList" style="width: 100%" v-loading="loading">
         <el-table-column type="index" width="50"> </el-table-column>
         <el-table-column prop="username" label="姓名" width="180">
         </el-table-column>
@@ -212,7 +212,8 @@ export default {
         // username: '',
         // email: '',
         mobile: ''
-      }
+      },
+      loading: true
     }
   },
   components: {
@@ -229,6 +230,7 @@ export default {
         .then(res => {
           let { data, meta } = res.data
           if (meta.status === 200) {
+            this.loading = false
             this.userList = data.users
             this.total = data.total
           }

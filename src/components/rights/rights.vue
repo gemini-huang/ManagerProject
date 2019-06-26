@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <Breadcrumb level2="权限管理" level3="权限列表"></Breadcrumb>
-    <el-table :data="tableData" border style="width: 100%" class="mytable">
+    <el-table :data="tableData" border style="width: 100%" class="mytable" v-loading="loading">
       <el-table-column type="index" width="40"> </el-table-column>
       <el-table-column prop="authName" label="权限名称" width="200"> </el-table-column>
       <el-table-column prop="path" label="路径" width="200"> </el-table-column>
@@ -21,7 +21,8 @@ import Breadcrumb from '@/components/common/breadcrumb'
 export default {
   data () {
     return {
-      tableData: []
+      tableData: [],
+      loading: true
     }
   },
   components: {
@@ -35,6 +36,7 @@ export default {
       }).then(res => {
         let {data, meta} = res.data
         if (meta.status === 200) {
+          this.loading = false
           this.tableData = data
         }
       })

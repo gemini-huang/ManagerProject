@@ -20,7 +20,7 @@
           >
         </el-col>
       </el-row>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" v-loading="loading">
       <el-table-column type="index" width="50"> </el-table-column>
       <el-table-column prop="goods_name" label="商品名称" width="500">
       </el-table-column>
@@ -69,7 +69,8 @@ export default {
       pagenum: 1,
       pagesize: 10,
       total: 0,
-      pagesizes: [10, 20, 100]
+      pagesizes: [10, 20, 100],
+      loading: true
     }
   },
   components: {
@@ -86,6 +87,7 @@ export default {
         console.log(res)
         let { data, meta } = res.data
         if (meta.status === 200) {
+          this.loading = false
           this.tableData = data.goods
           this.total = data.total
         }

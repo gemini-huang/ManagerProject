@@ -7,6 +7,7 @@
       row-key="cat_id"
       border
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      v-loading="loading"
     >
       <el-table-column prop="cat_name" label="分类名称" width="180">
       </el-table-column>
@@ -62,7 +63,8 @@ export default {
       total: 0,
       pagenum: 1,
       pagesize: 5,
-      pagesizes: [5, 10, 15]
+      pagesizes: [5, 10, 15],
+      loading: true
     }
   },
   components: {
@@ -77,6 +79,7 @@ export default {
         // console.log(res)
         let { data, meta } = res.data
         if (meta.status === 200) {
+          this.loading = false
           this.categoryList = data.result
           this.total = data.total
         }
