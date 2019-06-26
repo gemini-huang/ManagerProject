@@ -81,7 +81,7 @@
 <script>
 import Breadcrumbs from '@/components/common/breadcrumb'
 export default {
-  data() {
+  data () {
     return {
       categoryList: [],
       total: 0,
@@ -101,14 +101,14 @@ export default {
         value: 'cat_id',
         checkStrictly: true
       },
-      categoryName:''
+      categoryName: ''
     }
   },
   components: {
     Breadcrumbs
   },
   methods: {
-    getTableList() {
+    getTableList () {
       this.$http({
         method: 'get',
         // url: `categories?type=3&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
@@ -127,29 +127,29 @@ export default {
         }
       })
     },
-    sizeChange(size) {
+    sizeChange (size) {
       this.pagesize = size
       this.getTableList()
     },
-    currentChange(currentPage) {
+    currentChange (currentPage) {
       this.pagenum = currentPage
       this.getTableList()
     },
-    addCategory() {
+    addCategory () {
       this.dialogFormVisible = true
       this.$http({
         method: 'get',
         url: `categories?type=2`
       }).then(res => {
         let {meta, data} = res.data
-        if(meta.status === 200) {
+        if (meta.status === 200) {
           this.options = data
-        }else {
+        } else {
           this.$message.error(meta.msg)
         }
       })
     },
-    addCategoryFn() {
+    addCategoryFn () {
       let pid = this.selectVal.length === 0 ? 0 : this.selectVal[this.selectVal.length - 1]
       let level = this.selectVal.length
       this.$http({
@@ -160,40 +160,40 @@ export default {
           cat_name: this.categoryName,
           cat_level: level
         }
-      }).then(res =>{
+      }).then(res => {
         let {meta} = res.data
-        if(meta.status === 201) {
+        if (meta.status === 201) {
           this.$message({
             message: meta.msg,
             type: 'success'
           })
           this.dialogFormVisible = false
           this.getTableList()
-        }else {
+        } else {
           this.$message.error(meta.msg)
         }
       })
     },
     // 删除分类
-    deleteCategory(id) {
+    deleteCategory (id) {
       this.$http({
         method: 'delete',
         url: `categories/${id}`
-      }).then(res =>{
+      }).then(res => {
         let {meta} = res.data
-        if(meta.status === 200) {
+        if (meta.status === 200) {
           this.$message({
             message: meta.msg,
             type: 'success'
           })
           this.getTableList()
-        }else {
+        } else {
           this.$message.error(meta.msg)
         }
       })
     }
   },
-  mounted() {
+  mounted () {
     this.getTableList()
   }
 }

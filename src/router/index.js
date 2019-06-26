@@ -84,7 +84,7 @@ router.beforeEach(function (to, from, next) {
       // this.$message.error('请先登录！')
       Message({
         message: '请先登录！',
-        type:'error'
+        type: 'error'
       })
     } else {
       next()

@@ -120,7 +120,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 export default {
-  data() {
+  data () {
     return {
       activeTabName: '0',
       options: [],
@@ -163,7 +163,7 @@ export default {
     quillEditor
   },
   methods: {
-    handleClick() {
+    handleClick () {
       // console.log(tab, event)
       // console.log(this.activeTabName)
       if (this.activeTabName === '1' || this.activeTabName === '2') {
@@ -194,7 +194,7 @@ export default {
         })
       }
     },
-    loadCascader() {
+    loadCascader () {
       this.$http({
         method: 'get',
         url: 'categories?type=3'
@@ -205,7 +205,7 @@ export default {
         }
       })
     },
-    uploadSuccess(response) {
+    uploadSuccess (response) {
       // console.log(response.meta.status)
       if (response.meta.status === 200) {
         this.$message({
@@ -218,7 +218,7 @@ export default {
         this.$message.error(response.meta.msg)
       }
     },
-    handleRemove(file) {
+    handleRemove (file) {
       console.log(file)
       let index = this.addForm.pics.findIndex(
         item => file.response.data.tmp_path === item.pic
@@ -226,7 +226,7 @@ export default {
       this.addForm.pics.splice(index, 1)
     },
     // 添加商品
-    addGoods() {
+    addGoods () {
       this.$refs.addFormRef.validate(valid => {
         if (!valid) {
           this.$message.error('请填写必要的商品信息！')
@@ -265,7 +265,7 @@ export default {
       })
     }
   },
-  mounted() {
+  mounted () {
     this.loadCascader()
   }
 }

@@ -106,20 +106,20 @@ export default {
       this.$router.push('/goods/add')
     },
     // 删除商品
-    delGoods(id) {
+    delGoods (id) {
       id = parseInt(id)
       this.$http({
-        method:'delete',
+        method: 'delete',
         url: `goods/${id}`
-      }).then(res =>{
+      }).then(res => {
         let {meta} = res.data
-        if(meta.status === 200) {
+        if (meta.status === 200) {
           this.$message({
             message: meta.msg,
             type: 'success'
           })
           this.getTableList()
-        }else {
+        } else {
           this.$message.error(meta.msg)
         }
       })

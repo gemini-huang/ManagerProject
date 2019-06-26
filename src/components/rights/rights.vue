@@ -38,7 +38,7 @@ export default {
       pageList: [],
       pagenum: 1,
       pagesize: 5,
-      pagesizes:[5,10,15],
+      pagesizes: [5, 10, 15],
       total: 0
     }
   },
@@ -77,11 +77,11 @@ export default {
         }
       })
     },
-    sizeChange(size) {
+    sizeChange (size) {
       this.pagesize = size
       this.getTableData()
     },
-    currentChange(currentPage) {
+    currentChange (currentPage) {
       this.pagenum = currentPage
       this.getTableData()
     }
