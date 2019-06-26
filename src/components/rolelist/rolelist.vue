@@ -193,23 +193,27 @@ export default {
       this.dialogFormVisible = true
     },
     handleRights () {
-      const nodes = this.$refs.tree.getCheckedNodes()
-      let arr = []
-      nodes.forEach(item => {
-        // 选中的子权限id
-        arr.push(item.id.toString())
+      // const nodes = this.$refs.tree.getCheckedNodes()
+      // let arr = []
+      // nodes.forEach(item => {
+      //   // 选中的子权限id
+      //   arr.push(item.id.toString())
 
-        // 子权限的id 对应的父权限的id
-        if (typeof item.pid === 'number') {
-          arr.push(item.pid.toString())
-        } else {
-          arr = arr.concat(item.pid.split(','))
-        }
-      })
-      // 数组去重
-      const set = new Set(arr)
-      const ids = [...set].join(',')
-      // const ids = arr.join(',')
+      //   // 子权限的id 对应的父权限的id
+      //   if (typeof item.pid === 'number') {
+      //     arr.push(item.pid.toString())
+      //   } else {
+      //     arr = arr.concat(item.pid.split(','))
+      //   }
+      // })
+      // // 数组去重
+      // const set = new Set(arr)
+      // const ids = [...set].join(',')
+      // // const ids = arr.join(',')
+      let idAll = this.$refs.tree.getCheckedKeys()
+      let idHalf = this.$refs.tree.getHalfCheckedKeys()
+      let ids = [...idAll, ...idHalf]
+      ids = ids.join(',')
       this.$http({
         method: 'post',
         url: `roles/${this.currentRole.id}/rights`,

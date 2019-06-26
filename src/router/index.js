@@ -11,6 +11,8 @@ import Categories from '@/components/categories/categories'
 import Report from '@/components/report/report'
 import Params from '@/components/params/params'
 import Orders from '@/components/orders/orders'
+
+import { Message } from 'element-ui'
 Vue.use(Router)
 
 let router = new Router({
@@ -78,6 +80,11 @@ router.beforeEach(function (to, from, next) {
     let token = window.localStorage.getItem('token')
     if (!token) {
       router.push('/login')
+      // this.$message.error('请先登录！')
+      Message({
+        message: '请先登录！',
+        type:'error'
+      })
     } else {
       next()
     }

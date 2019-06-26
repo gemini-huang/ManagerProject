@@ -35,7 +35,7 @@
                   <el-tag
                     class="myeltag"
                     closable
-                    v-for="(item, index) in scope.row.params"
+                    v-for="(item, index) in scope.row.attr_vals"
                     :key="index"
                   >
                     {{ item }}
@@ -135,19 +135,26 @@ export default {
         if (meta.status === 200) {
           if (this.activeName === 'many') {
             this.dynamicTableData = data
+            // this.dynamicTableData.forEach(item => {
+            //   let arr = []
+            //   item.attr_vals
+            //     .trim()
+            //     .split(',')
+            //     .forEach(item1 => {
+            //       if (item1) {
+            //         arr.push(item1)
+            //       }
+            //     })
+            //   console.log(arr)
+            //   this.$set(item, 'params', arr)
+            // })
             this.dynamicTableData.forEach(item => {
-              let arr = []
-              item.attr_vals
-                .trim()
-                .split(',')
-                .forEach(item1 => {
-                  if (item1) {
-                    arr.push(item1)
-                  }
-                })
-              console.log(arr)
-              this.$set(item, 'params', arr)
+              item.attr_vals =
+                  item.attr_vals.trim().length <= 0
+                    ? []
+                    : item.attr_vals.trim().split(',')
             })
+            console.log(data)
           } else {
             this.staticTableData = data
           }
