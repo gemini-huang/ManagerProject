@@ -223,13 +223,20 @@ export default {
     getTableList () {
       this.$http({
         method: 'get',
-        url: `users?query=${
-          this.query
-        }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
+        url: `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
+          this.pagesize
+        }`
       })
         .then(res => {
           let { data, meta } = res.data
+          console.log(data)
           if (meta.status === 200) {
+            // 删除一页后的最后一条返回上一页
+            if (data.users.length === 0 && this.pagenum !== 1) {
+              this.pagenum--
+              this.getTableList()
+              return
+            }
             this.loading = false
             this.userList = data.users
             this.total = data.total
@@ -349,9 +356,7 @@ export default {
     editRole () {
       this.$http({
         method: 'put',
-        url: `users/${
-          this.roleObj.id
-        }/role`,
+        url: `users/${this.roleObj.id}/role`,
         data: {
           rid: this.roleObj.rid
         }

@@ -169,6 +169,8 @@ export default {
           })
           this.dialogFormVisible = false
           this.getTableList()
+          this.categoryName = ''
+          this.selectVal = []
         } else {
           this.$message.error(meta.msg)
         }
